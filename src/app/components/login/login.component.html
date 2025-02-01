@@ -1,0 +1,14 @@
+<p-dialog header="Zaloguj się" [(visible)]="visible" [modal]=true [closable]="true" (onHide)="closeDialog()">
+    <div class="row">
+        <label>Login</label>
+        <input type="text" pInputText [(ngModel)]="login" />        
+    </div>
+    <div class="row">
+        <label>Hasło</label>
+        <input type="password" pInputText [(ngModel)]="password" />        
+    </div>
+    <div class="col-md-12 login-buttons">
+        <p-button label="Dalej" (click)="signIn()"></p-button>
+        <p-button class="space" label="Anuluj" (click)="closeDialog()"></p-button>
+    </div>        
+</p-dialog>

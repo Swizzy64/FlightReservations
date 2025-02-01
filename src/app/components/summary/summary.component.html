@@ -1,0 +1,35 @@
+<div class="row offset-md-2 col-md-8 main">
+    <div class="flight col-md-12">
+        <div class="col-md-3">
+            {{sourceCity}}
+        </div>
+        <div class="col-md-2">
+            <i class="pi pi-arrow-right"></i>
+        </div>
+         <div class="col-md-2">
+            {{destinationCity}}
+         </div>
+    </div>
+    <div class="col-md -12 seats">
+        <span class="seat">Miejsca:</span> 
+        <div *ngFor="let seat of seats" class="seat">
+            <span>{{seat}}</span>
+        </div>
+    </div>
+    <div class="col-md-12 weather">
+        <div *ngIf="isDateValid">
+            Pogoda w {{destinationCity}}: {{temperature}} C <img [src]="weatherIcon"/>
+        </div>
+        <div *ngIf="!isDateValid">
+            Pogoda w {{destinationCity}}: brak danych
+        </div>
+    </div>
+    <div class="col-md-12 price">
+        Cena biletu: {{ticketShowPrice}} <p-dropdown [options]="currencyList" [(ngModel)]="currency" (onChange)="changeCurrency()" placeholder="PLN" class="currency-dropdown"></p-dropdown>
+    </div>
+    <div class="col-md-12">
+        <div class="row-button">
+          <p-button (click)="goToMain()">Powrót</p-button>
+        </div>
+      </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="row offset-md-2 col-md-8 main">
+    <div class="column">
+        <div class="row passengers-number">
+            Liczba pasażerów: {{passengers}}
+        </div>
+
+        <div class="row-baggage-container">
+          <div class="baggage-selection">
+              <label for="cabinBaggage">Bagaż pokładowy:</label>
+              <select id="cabinBaggage" [(ngModel)]="cabinBaggage" class="baggage-dropdown">
+                  <option *ngFor="let num of baggageOptions" [value]="num">{{ num }}</option>
+              </select>
+          </div>
+          <div class="baggage-selection">
+              <label for="registeredBaggage">Bagaż rejestrowany:</label>
+              <select id="registeredBaggage" [(ngModel)]="registeredBaggage" class="baggage-dropdown">
+                  <option *ngFor="let num of baggageOptions" [value]="num">{{ num }}</option>
+              </select>
+          </div>
+      </div>
+        
+        <div [ngSwitch]="plane">
+            <ng-container *ngSwitchCase="'SMALL'">
+                <div class="seats-container">
+                    <div *ngFor="let row of seatRows" class="lane">
+                      <label *ngFor="let seat of row" class="seat">
+                        <input type="checkbox" [(ngModel)]="selectedSeats[seat]" />
+                        {{ seat }}
+                      </label>
+                    </div>
+                </div>
+            </ng-container>
+          
+            <ng-container *ngSwitchCase="'MEDIUM'">
+                <div class="seats-container">
+                    <div *ngFor="let row of seatRows" class="lane">
+                      <label *ngFor="let seat of row" class="seat">
+                        <input type="checkbox" [(ngModel)]="selectedSeats[seat]" />
+                        {{ seat }}
+                      </label>
+                    </div>
+                </div>
+            </ng-container>
+          
+            <ng-container *ngSwitchCase="'BIG'">
+                <div class="seats-container">
+                    <div *ngFor="let row of seatRows" class="lane">
+                      <label *ngFor="let seat of row" class="seat">
+                        <input type="checkbox" [(ngModel)]="selectedSeats[seat]" />
+                        {{ seat }}
+                      </label>
+                    </div>
+                </div>
+            </ng-container>
+          </div>
+    </div>
+    <div class="row">
+      <div class="row-button">
+        <p-button (click)="confirmSeats()">Dalej</p-button>
+      </div>
+    </div>
+</div>
