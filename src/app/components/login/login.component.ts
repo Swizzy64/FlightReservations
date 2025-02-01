@@ -1,16 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { users } from './../../../assets/users.json';
 import { Router } from '@angular/router';
 import { FlightData } from '../../../services/domain/flightData';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [DialogModule, ButtonModule, InputTextModule, FormsModule],
+  imports: [DialogModule, ButtonModule, InputTextModule, FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -19,35 +20,35 @@ export class LoginComponent implements OnInit {
   @Output() visibleChange = new EventEmitter<boolean>();
   @Input() flightData: FlightData | null = null;
 
-  password: string = '';
-  login: string = '';
+  loginForm: FormGroup;
   usersList: any[] = [];
 
-  constructor(private router: Router){}
+  constructor(private router: Router, private fb: FormBuilder) {
+    this.loginForm = this.fb.group({
+      login: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {
     this.usersList = (users as any[]);
   }
 
   closeDialog() {
-    this.login = '';
-    this.password = '';
+    this.loginForm.reset();
     this.visible = false;
     this.visibleChange.emit(this.visible);
   }
 
-  signIn(){
-    var user = this.usersList.find(x => x.email == this.login);
-    if(user){
-      if(user.password == this.password){
-        const data = this.flightData;
-        this.router.navigate(['/choose-seats'], { queryParams: data });
-      }
-      else{
-        alert("Dane logowania są nieprawidłowe!");
-      }
-    }    
-    else{
+  signIn() {
+    if (this.loginForm.invalid) return;
+
+    const { login, password } = this.loginForm.value;
+    const user = this.usersList.find(u => u.email === login);
+
+    if (user && user.password === password) {
+      this.router.navigate(['/choose-seats'], { queryParams: this.flightData });
+    } else {
       alert("Dane logowania są nieprawidłowe!");
     }
   }
