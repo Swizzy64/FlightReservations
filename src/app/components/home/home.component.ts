@@ -14,7 +14,7 @@ import { FlightData } from '../../../services/domain/flightData';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet, ButtonModule, CalendarModule, FormsModule, CommonModule, DropdownModule, InputNumberModule, DialogModule, LoginComponent],
+  imports: [ButtonModule, CalendarModule, FormsModule, CommonModule, DropdownModule, InputNumberModule, DialogModule, LoginComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
